@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>produkt</title>
+    <link href="/resources/css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header, footer {
+            background-color: #f7f7f7;
+            padding: 1rem;
+            text-align: center;
+        }
+        .product {
+            background-color: #ffffff;
+            margin: 2rem auto;
+            padding: 1rem;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .buy-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .text-md {
+            font-size: 1.25rem;
+            margin: 0.5rem 0;
+        }
+        .price-tag {
+            font-size: 1rem;
+            color: #333;
+        }
+    </style>
+
+    <script>
+        async function sendReq(url, method, headers = null, data = null) {
+            const options = { method: method, headers: { "Content-type": "application/json", ...headers } }
+            if (method != "GET" && data != null) options.body = JSON.stringify(data);
+            const res = await fetch(url, options)
+            const text = await res.text()
+            return text;
+        }
+
+        let products;
+        document.addEventListener('DOMContentLoaded', async () => {
+            const result = await sendReq('http://localhost:3000/api/products', "GET");
+            const products = JSON.parse(result)
+
+            document.getElementById('p1_image').src = "data:image/png;base64," + products[0].photo
+            document.getElementById('p1_name').innerText = products[0].name
+            document.getElementById('p1_price').innerText = products[0].price
+            document.getElementById('p1_desc').innerText = products[0].description
+
+            document.getElementById('p2_image').src = "data:image/png;base64," + products[1].photo
+            document.getElementById('p2_name').innerText = products[1].name
+            document.getElementById('p2_price').innerText = products[1].price
+            document.getElementById('p2_desc').innerText = products[1].description
+
+            document.getElementById('p3_image').src = "data:image/png;base64," + products[2].photo
+            document.getElementById('p3_name').innerText = products[2].name
+            document.getElementById('p3_price').innerText = products[2].price
+            document.getElementById('p3_desc').innerText = products[2].description
+        })
+    </script>
+
+</head>
+
+<body>
+    <header class="bg-yellow-300 text-center p-4">
+        <h1 class="text-2xl font-bold">Váš jediný obchod pro vše o kuřatech!</h1>
+    </header>
+
+    <main class="flex-grow">
+        <div class="product">
+            <h3 class="text-md font-semibold" id="p3_name"></h3>
+            <img id="p3_image" alt="Hnědá slepice">
+<p id="p3_desc">Popis: </p>
+<p class="price-tag">Cena: <span id="p3_price"></span> Kč</p>
+<a href="/buy/tri" class="buy-button">Koupit</a>
+</div>
+
+</main>
+<footer class="text-center p-4 mt-4 bg-gray-200">
+    <p>© 2024 Kuřecí eShop</p>
+</footer>
+
+</body>
+</html>

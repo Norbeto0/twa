@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐾✨ Psychedelic Cat Emporium ✨🐾</title>
+  <link href="/resources/css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #a8dadc;
+      font-family: 'Comic Sans MS', cursive;
+      margin: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: #457b9d;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ed64a6;
+      margin: 0;
+    }
+
+    .header-logo {
+      width: 70px;
+      height: 70px;
+      filter: invert(1);
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .product-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .card {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+      padding: 20px;
+      background: linear-gradient(45deg, #fe938c, #d5cceb);
+      width: 100%;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+
+    .card-details {
+      flex: 1;
+      text-align: left;
+      color: #4b0082;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .buy-button {
+      background-color: #ff4500;
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      border-radius: 8px;
+    }
+
+    .buy-button:hover {
+      background-color: #cc3e00;
+    }
+
+    .buy-button::before {
+      content: "🌈";
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    footer {
+      background-color: #edf2f7;
+      color: #333;
+      padding: 20px;
+      margin-top: 20px;
+    }
+  </style>
+  <script>
+    async function sendReq(url, method, headers = null, data = null) {
+      const options = {
+        method: method,
+        headers: { "Content-type": "application/json", ...headers }
+      }
+      if (method != "GET" && data != null) options.body = JSON.stringify(data);
+      const res = await fetch(url, options)
+      const text = await res.text()
+      return text;
+    }
+
+    let products;
+    document.addEventListener('DOMContentLoaded', async () => {
+      const result = await sendReq('http://localhost:3000/api/products', "GET");
+      const products = JSON.parse(result)
+
+      document.getElementById('p1_image').src = "data:image/png;base64," + products[0].photo
+      document.getElementById('p1_name').innerText = products[0].name
+      document.getElementById('p1_price').innerText = products[0].price
+      document.getElementById('p1_desc').innerText = products[0].description
+
+      document.getElementById('p2_image').src = "data:image/png;base64," + products[1].photo
+      document.getElementById('p2_name').innerText = products[1].name
+      document.getElementById('p2_price').innerText = products[1].price
+      document.getElementById('p2_desc').innerText = products[1].description
+
+      document.getElementById('p3_image').src = "data:image/png;base64," + products[2].photo
+      document.getElementById('p3_name').innerText = products[2].name
+      document.getElementById('p3_price').innerText = products[2].price
+      document.getElementById('p3_desc').innerText = products[2].description
+    })
+  </script>
+
+</head>
+
+<body>
+  <header>
+    <h1>🌟 Welcome to our Psychedelic Cat Shop! 🌟</h1>
+    <img src="https://placekitten.com/70/70" alt="Cat Logo" class="header-logo">
+  </header>
+  <main>
+
+    <section id="featured-products" class="my-4 product-container">
+
+      <div class="card">
+        <img id="p1_image" alt="Sweetheart the tabby cat">
+        <div class="card-details">
+          <h3 id="p1_name" class="text-md font-semibold"></h3>
+          <p>Description: <span id="p1_desc"></span></p>
+          <p>Age: 2 years old, Adoption Fee: <span id="p1_price"></span> €</p>
+        </div>
+        <a href="/buy/One" class="buy-button">Adopt</a>
+      </div>
+
+      <div class="card">
+        <img id="p2_image" alt="Cheshire the calico cat">
+        <div class="card-details">
+          <h3 id="p2_name" class="text-md font-semibold"></h3>
+          <p>Description: <span id="p2_desc"></span></p>
+          <p>Age: 1 years old, Adoption Fee: <span id="p2_price"></span> €</p>
+        </div>
+        <a href="/buy/Two" class="buy-button">Adopt</a>
+      </div>
+
+      <div class="card">
+        <img id="p3_image" alt="Oliver the tuxedo cat">
+        <div class="card-details">
+          <h3 id="p3_name" class="text-md font-semibold"></h3>
+          <p>Description: <span id="p3_desc"></span></p>
+          <p>Age: 1 years old, Adoption Fee: <span id="p3_price"></span> €</p>
+        </div>
+        <a href="/buy/Three" class="buy-button">Adopt</a>
+      </div>
+    </section>
+    <section id="about-shop" class="my-4">
+      <h2>🌈 About Our Psychedelic Shelter</h2>
+      <p>
+        Welcome to our Psychedelic Cat Shop! We are a non-profit organization that rescues and rehomes cats from
+        alternate dimensions. Each cat comes with a splash of magic, ensuring a lifetime of color and joy. Our cats
+        are enlightened beings, radiating love in every purr. Adopt one today and embark on a cosmic journey!
+      </p>
+    </section>
+  </main>
+  <footer>
+    <p>© 2024 Psychedelic Cat Emporium 🐾✨</p>
+  </footer>
+</body>
+
+</html>
